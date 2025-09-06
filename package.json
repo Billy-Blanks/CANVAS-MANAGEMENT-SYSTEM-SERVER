@@ -1,0 +1,33 @@
+{
+  "name": "Canvas-house-rent-system-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --build --verbose",
+    "start": "pnpm build && nodemon app.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.11.0",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "luxon": "^3.7.1",
+    "mongoose": "^8.14.3",
+    "multer": "1.4.5-lts.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.1",
+    "@types/luxon": "^3.6.2",
+    "@types/multer": "^1.4.12",
+    "nodemon": "^3.1.10",
+    "typescript": "^5.8.3"
+  }
+}
