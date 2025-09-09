@@ -56,8 +56,8 @@ app.post("/pay", cors(), async function (req, res) {
   const payload = {
     BusinessShortCode: 174379,
     Password:
-      "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUwOTA0MTg0ODUy",
-    Timestamp: "20250904184852",
+      "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUwOTA5MTEwNzQ5",
+    Timestamp: "20250909110749",
     TransactionType: "CustomerPayBillOnline",
     Amount: parseInt(amount),
     PartyA: formatKenyanPhoneNumber(phone),
@@ -74,7 +74,8 @@ app.post("/pay", cors(), async function (req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer CAhYAhTPjipIf1IH6o0qMpz2U4ry
+        Authorization: `Bearer kumsNRKAEjPgJMTpgsUex6U6i3zh
+
 `,
       },
       body: JSON.stringify(payload),
