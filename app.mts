@@ -7,6 +7,7 @@ import { UserModel } from "./schema/user.mjs";
 import { PaymentModel } from "./schema/payment.mjs";
 import { DateTime } from "luxon";
 import formatKenyanPhoneNumber from "./utilities/formatKenyanPhoneNumber.mjs";
+import { nanoid } from "nanoid";
 
 const app = express();
 const upload = multer();
@@ -43,26 +44,26 @@ app.post("/login", cors(), upload.none(), async function (req, res) {
     res.status(200).json({ error: "Please check your password" });
     return;
   }
-  res.status(200).json("Login successfull");
+  res.status(200).json(user);
 });
 
 app.post("/pay", cors(), async function (req, res) {
   console.log("Payment request received", req.body);
 
-  const { phone, id, amount } = req.body;
+  const { phone, name, amount } = req.body;
 
   const timestamp = DateTime.now().toFormat("yyyyMMddhhmmss");
 
   const payload = {
     BusinessShortCode: 174379,
     Password:
-      "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUwNzEyMjI1MDMx",
-    Timestamp: timestamp,
+      "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUwOTExMDAwNzA3",
+    Timestamp: "20250911000707",
     TransactionType: "CustomerPayBillOnline",
     Amount: parseInt(amount),
     PartyA: phone,
     PartyB: 174379,
-    PhoneNumber: formatKenyanPhoneNumber(phone),
+    PhoneNumber: phone,
     CallBackURL: "https://mydomain.com/path",
     AccountReference: "Billy LTD",
     TransactionDesc: "Payment of rent",
@@ -74,17 +75,18 @@ app.post("/pay", cors(), async function (req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer aYK3X6Poc9lo8pGoGs8pHLZI4VY7`,
+        Authorization: `Bearer WKAn59JqssN73DMBIKMctdZPxjNQ`,
       },
       body: JSON.stringify(payload),
     }
   );
 
   const newPayment = new PaymentModel({
-    paymentId: id,
+    name:name,
+    paymentId: nanoid(),
     date: DateTime.now().toISO(),
     amount: payload.Amount,
-    status: "Pending",
+    status: "Paid",
     method: "MPESA",
   });
 
