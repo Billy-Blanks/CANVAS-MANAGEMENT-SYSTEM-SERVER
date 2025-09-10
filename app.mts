@@ -43,24 +43,24 @@ app.post("/login", cors(), upload.none(), async function (req, res) {
     res.status(200).json({ error: "Please check your password" });
     return;
   }
-  res.status(200).json(user);
+  res.status(200).json("Login successfull");
 });
 
 app.post("/pay", cors(), async function (req, res) {
   console.log("Payment request received", req.body);
 
-  const { phone, id, amount,name } = req.body;
+  const { phone, id, amount } = req.body;
 
   const timestamp = DateTime.now().toFormat("yyyyMMddhhmmss");
 
   const payload = {
     BusinessShortCode: 174379,
     Password:
-      "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUwOTA5MTEwNzQ5",
-    Timestamp: "20250909110749",
+      "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUwNzEyMjI1MDMx",
+    Timestamp: timestamp,
     TransactionType: "CustomerPayBillOnline",
     Amount: parseInt(amount),
-    PartyA: formatKenyanPhoneNumber(phone),
+    PartyA: phone,
     PartyB: 174379,
     PhoneNumber: formatKenyanPhoneNumber(phone),
     CallBackURL: "https://mydomain.com/path",
@@ -74,20 +74,17 @@ app.post("/pay", cors(), async function (req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer kumsNRKAEjPgJMTpgsUex6U6i3zh
-
-`,
+        Authorization: `Bearer aYK3X6Poc9lo8pGoGs8pHLZI4VY7`,
       },
       body: JSON.stringify(payload),
     }
   );
 
   const newPayment = new PaymentModel({
-    name: name,
     paymentId: id,
     date: DateTime.now().toISO(),
     amount: payload.Amount,
-    status: "Paid",
+    status: "Pending",
     method: "MPESA",
   });
 
@@ -100,7 +97,7 @@ app.post("/pay", cors(), async function (req, res) {
     );
   }
 
-  const data = await resp.json();
+  const data = await res.json();
   res.status(200).json(data);
 });
 

@@ -1,11 +1,14 @@
 {
-  "name": "Canvas-house-rent-system-server",
+  "name": "canvas-house-rent-system-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.mjs",
+  "type": "module",
+  "private": true,
   "scripts": {
     "build": "tsc --build --verbose",
-    "start": "pnpm build && nodemon app.mjs",
+    "start": "node app.mjs",
+    "dev": "nodemon --watch . --ext mts,mjs,ts,js,json --exec \"pnpm build && node app.mjs\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
